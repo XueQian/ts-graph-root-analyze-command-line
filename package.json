@@ -27,6 +27,7 @@
     "nyc": "^14.1.1",
     "ts-optchain": "^0.1.8",
     "typed-rest-client": "^1.5.0",
+    "typeorm": "^0.2.20",
     "typescript": "^3.6.4"
   },
   "devDependencies": {
