@@ -9,7 +9,7 @@
   },
   "scripts": {
     "test": "npx nyc mocha --opts ./test/mocha.opts --recursive test/**/*.spec.ts",
-    "start": "./node_modules/.bin/npx ts-node src/index.ts",
+    "start": "./node_modules/.bin/npx ts-node src/index.ts analyze -l $API_URL -v $VISUAL_API_URL",
     "lint": "eslint ./src ./test --ext .ts",
     "lint-fix": "eslint ./src ./test --ext .ts --fix"
   },
