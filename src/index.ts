@@ -1,7 +1,7 @@
 #!/usr/bin/env ts-node
 
 import * as program from "commander";
-import {Deps, getClass, getMethod, PlsqlName} from "./providers/deps";
+import {Deps, PlsqlName} from "./providers/deps";
 import {PlSqlRoot, PlsqlUseCaseExternPointAnalyzor} from "./services/analyze-plsql-use-case-extern-point";
 import {MySql} from "./database/my-sql-client";
 import {DbClient} from "./database/db-client";

@@ -1,4 +1,3 @@
-import {oc} from "ts-optchain";
 import {RootWithUrl} from "../index";
 
 export const exportPlsqlRoot = (roots: RootWithUrl[]): string => {
