@@ -4,16 +4,14 @@ import {DbClient} from "./db-client";
 class MySql implements DbClient {
     private pool: Pool;
 
-    public constructor(host: string, port: number, user: string, password: string, database: string,
-                       connectionLimit = 5, acquireTimeout = 60000) {
+    public constructor(host: string, port: number, user: string, password: string, database: string, connectionLimit = 5) {
         this.pool = createPool({
             host,
             port,
             database,
             user,
             password,
-            connectionLimit,
-            acquireTimeout
+            connectionLimit
         });
     }
 

@@ -1,5 +1,4 @@
 import * as rm from "typed-rest-client/RestClient";
-import {oc} from "ts-optchain";
 
 export class Deps {
 
@@ -9,16 +8,30 @@ export class Deps {
                 (plSqlName) => this.fetchSql(ServerUrl, plSqlName)));
     }
 
-    private static async fetchSql(ServerUrl: string, plsqlName) {
+    public static async fetchSql(ServerUrl: string, plsqlName) {
         const client = new rm.RestClient("aop", ServerUrl);
         const url = `/plsql/${plsqlName.pkg}/${plsqlName.method}/callers`;
         try {
             const rs = await client.get<Graph>(url);
-            return new Deps(rs.statusCode === 200, rs.result, plsqlName);
+
+            const nodes = rs.result.nodes;
+            let isClaimModule = false;
+            nodes.map((node: any) => {
+                if (node.properties.color === "#ADD8E6") {
+                    isClaimModule = true;
+                    return;
+                }
+            });
+
+            if (isClaimModule && rs.statusCode === 200) {
+                console.log(url);
+                console.log(plsqlName);
+                return new Deps(true, rs.result, plsqlName);
+            }
         } catch (ex) {
-            return new Deps(false, null, plsqlName);
         }
     }
+
     public readonly isSuccess: boolean;
     public readonly Deps: Graph;
     public readonly plSql: PlsqlName;
@@ -53,19 +66,7 @@ export class Graph {
         this.nodes = nodes;
         this.edges = edges;
     }
-
-    ignoreNonSupportNode(titles: string[]) {
-        if (this.nodes) {
-            this.nodes = this.nodes.filter(node => {
-                return titles.some(title => {
-                    return title === node.title
-                })
-            })
-        }
-    }
 }
-
-export const isEmptyEdge = (edges: Edge[]) => oc(edges).length(0) === 0;
 
 export interface Edge {
     a: string;
@@ -88,4 +89,5 @@ export const getMethod = (node: Node) => {
 export interface Node {
     id: string;
     title: string;
+    properties: object;
 }
